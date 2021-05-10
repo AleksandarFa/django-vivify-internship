@@ -7,7 +7,9 @@ todo_urlpatterns = [
     path("todos/<int:pk>/", DetailTodoView.as_view()),
     path("todos/", HomeView.as_view()),
     path("users/<int:pk>/", show_one_user),
+    path("users/me/", UserView.as_view()),
     path("users/", show_all_users_view),
+    
     path("todos/post/", PostTodoView.as_view()),
     path("todos/update/<int:pk>/", UpdateTodoView.as_view({"put":"update", "patch":"partial_update"})),
     path("todos/delete/<int:pk>/", DeleteTodoView.as_view())
