@@ -19,10 +19,14 @@ from rest_framework.routers import DefaultRouter
 
 from todo.urls import todo_urlpatterns
 
+from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView,)
+
 app_urlpatterns = todo_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/v1/", include(app_urlpatterns)),
     path("api-auth/", include("rest_framework.urls")),
+    path('api/v1/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

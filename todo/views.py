@@ -9,6 +9,7 @@ from rest_framework.mixins import RetrieveModelMixin, ListModelMixin, UpdateMode
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import generics
 from django.views.generic.list import ListView
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 class HomeView(APIView):
@@ -18,10 +19,9 @@ class HomeView(APIView):
 
 
 class UserView(APIView):
-    def get(self, request, format=None):
-        users = [user.username for user in User.objects.all()]
-        return Response(users)
-
+    permission_classes = (IsAuthenticated,) 
+    def get(self, request):
+        return Response(UserSerializer(request.user).data)
 
 class UserViewSet(RetrieveModelMixin, GenericViewSet):
     permission_classes = [permissions.IsAdminUser]
