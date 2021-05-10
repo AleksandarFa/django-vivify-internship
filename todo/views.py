@@ -8,6 +8,7 @@ from .serializers import UserSerializer, DetailTodoSerializer
 from rest_framework.mixins import RetrieveModelMixin, ListModelMixin, UpdateModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import generics
+from django.views.generic.list import ListView
 # Create your views here.
 
 class HomeView(APIView):
@@ -50,3 +51,22 @@ class DeleteTodoView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAdminUser]
     serializer_class = DetailTodoSerializer
     queryset = Todo.objects.all()
+
+
+def show_all_users_view(request):
+    users = User.objects.all()
+    context = {"users":users}
+        
+    return render(request, "users.html", context)
+
+
+def show_one_user(request, pk=None):
+    user = []
+    if pk:
+        user = User.objects.get(pk = pk)
+    
+    context = {"user":user}
+    return render(request, "user.html", context)
+
+
+        
